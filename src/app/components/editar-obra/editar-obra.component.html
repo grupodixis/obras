@@ -1,0 +1,40 @@
+<div class="container" *ngIf="obras">
+
+    <div class="row">
+
+        <div class="input-group mb-3 mt-3 col-sm-12">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">Cliente:</span>
+            </div>
+            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" [(ngModel)]="obras.clienteObra">
+        </div>
+
+        <div class="input-group mb-3 mt-3 col-sm-12">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">Obra:</span>
+            </div>
+            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" [(ngModel)]="obras.nombreObra">
+            <div class="input-group-append">
+                <a class="btn btn-group text-white" [ngClass]="{'btn-success' : obras.status == false, 'btn-danger' : obras.status == true }" (click)="activarObra()">Activa</a>
+            </div>
+
+        </div>
+
+
+
+        <div class="input-group mb-3 mt-3 col-sm-12">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">Descripción:</span>
+            </div>
+            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" [(ngModel)]="obras.descripcion">
+        </div>
+
+    </div>
+
+    <h3>Capitulos:</h3>
+    <div *ngIf="capitulos"></div>
+    <div class="row box-obra mt-3" *ngFor="let capitulo of capitulos">
+
+
+    </div>
+</div>

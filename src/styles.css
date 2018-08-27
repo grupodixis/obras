@@ -1,1 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+
+.box-obra {
+    border-radius: 5px;
+    border-left: 5px cornflowerblue solid !important;
+    border: 1px #ccc solid;
+    box-shadow: #aaa 2px 2px 5px;
+}

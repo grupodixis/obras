@@ -1,0 +1,19 @@
+<div class="container mt-4 p-4">
+    <div class="row  box-obra mt-3" *ngFor="let obra of obras">
+
+        <div class="col-sm-11">
+
+            <h4 class="text-dark">{{obra.nombreObra}}</h4>
+            <p class="text-info">Cliente: {{obra.clienteObra}}</p>
+            <p>{{obra.descripcion}}</p>
+
+        </div>
+        <div class="col-sm-1 d-flex align-items-center">
+            <a class="btn btn-danger btn-lg" title="Editar" [routerLink]="['/editar',obra.idObra]">
+                <i class="fas fa-pen"></i>
+            </a>
+        </div>
+
+
+    </div>
+</div>

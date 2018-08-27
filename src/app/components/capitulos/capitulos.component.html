@@ -1,0 +1,16 @@
+<div class="container mt-4 p-4">
+    <div class="row  box-obra mt-3" *ngFor="let capitulo of capitulos;let i = index">
+
+        <div class="col-sm-11">
+
+            <h4 class="text-dark">{{capitulo.nombreTarea}}</h4>
+            <p class="text-info">Obra: {{capitulo.nombreObra}}</p>
+            <p class="text-info">Codigo: {{capitulo.codigo}}</p>
+            <p>Tiempo estimado: {{capitulo.tiempoEstimado}}</p>
+
+        </div>
+
+
+
+    </div>
+</div>
