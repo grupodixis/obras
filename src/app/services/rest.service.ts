@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 export class RestService {
 
   constructor(private http: HttpClient) {}
-getRest(url) {
+getRest(url): any {
   return this.http.get(url);
 }
 
