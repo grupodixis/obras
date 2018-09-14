@@ -18,23 +18,28 @@ capitulos: any;
       this.idObra = params['id'];
       console.log(this.idObra);
     });
-    this.rest.getRest('http://api.pablosanchezweb.com/obras/' + this.idObra )
-      .subscribe(data => {
-        this.obras = data.data[0];
-        /*if (this.obras.status === 1) { this.obras.status = true; } else { this.obras.status = false; }*/
-        console.log(this.obras);
-    } );
-    this.rest.getRest('http://api.pablosanchezweb.com/tareas/' + this.idObra )
-      .subscribe(data => {
-        this.capitulos = data.data;
-        console.log(this.capitulos);
-    } );
-   }
-  
+
+    this.getObra();
+    this.getCapitulos();
+  }
+
   activarObra() {
     this.obras.status = !this.obras.status;
     console.log(this.obras.status);
-    
+  }
+
+  getObra() {
+    this.rest.getRest('obras/' + this.idObra )
+      .subscribe(data => {
+        this.obras = data.data[0];
+    } );
+  }
+
+  getCapitulos() {
+    this.rest.getRest('tareas/' + this.idObra )
+      .subscribe(data => {
+        this.capitulos = data.data;
+    } );
   }
 
 
