@@ -50,7 +50,7 @@
             </div>
             <input type="time" class="form-control" [(ngModel)]="nuevoCapitulo.tiempoEstimado">
 
-            <button class="btn btn-success ml-1" (click)="AgregarCapitulo()"> <i class="fas fa-plus"></i> </button>
+            <button class="btn btn-success ml-1" (click)="agregarCapitulo()"> <i class="fas fa-plus"></i> </button>
 
         </div>
 
@@ -67,19 +67,19 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">Codigo:</span>
             </div>
-            <input type="text" class="form-control" [(ngModel)]="capitulo.codigo">
+            <input type="text" class="form-control" [(ngModel)]="capitulo.codigo" (blur)="actualizarCapitulo(capitulo)" >
 
             <div class="input-group-prepend">
                 <span class="input-group-text">Capitulo:</span>
             </div>
-            <input type="text" class="form-control" [(ngModel)]="capitulo.nombreTarea">
+            <input type="text" class="form-control" [(ngModel)]="capitulo.nombreTarea" (blur)="actualizarCapitulo(capitulo)" >
 
             <div class="input-group-prepend">
                 <span class="input-group-text">Estimado:</span>
             </div>
-            <input type="time" class="form-control" [(ngModel)]="capitulo.tiempoEstimado">
+            <input type="time" class="form-control" [(ngModel)]="capitulo.tiempoEstimado" (blur)="actualizarCapitulo(capitulo)" >
 
-            <button class="btn btn-danger ml-1"> <i class="fas fa-trash"></i> </button>
+            <button class="btn btn-danger ml-1" (click)="checkCapituloPartes(capitulo)" > <i class="fas fa-trash"></i> </button>
 
         </div>
 

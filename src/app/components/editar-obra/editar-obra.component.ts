@@ -29,6 +29,8 @@ nuevoCapitulo: any = {};
     console.log(this.obras.status);
   }
 
+/* LECTURA DE DATOS */
+
   getObra() {
     this.rest.getRest('obras/' + this.idObra )
       .subscribe(data => {
@@ -40,11 +42,16 @@ nuevoCapitulo: any = {};
     this.rest.getRest('tareas/' + this.idObra )
       .subscribe(data => {
         this.capitulos = data.data;
+        console.log(this.capitulos);
+        
     } );
   }
-  AgregarCapitulo() {
+
+ /* AGREGAR NUEVOS DATOS */
+  agregarCapitulo() {
     this.nuevoCapitulo.nombreObra = this.obras.nombreObra;
     this.nuevoCapitulo.idObra = this.obras.idObra;
+    this.nuevoCapitulo.status = true;
     this.rest.postRest('tareas/', this.nuevoCapitulo).subscribe( data => {
       console.log(data);
       
@@ -52,6 +59,33 @@ nuevoCapitulo: any = {};
     this.nuevoCapitulo = {};
     this.getCapitulos();
   }
+
+
+
+/*    ACTUALIZAR DATOS */
+  actualizarCapitulo(capitulo){
+    
+    this.rest.putRest('tareas/',capitulo).subscribe( data =>{
+      console.log(data);
+      
+    });
+  }
+  checkCapituloPartes(capitulo){
+    this.rest.getRest('partes/' + capitulo.idTarea+'/' ).subscribe(
+      data =>{
+        if (data.data && data.data.length){
+          console.log('Tiene partes Activos');
+          console.log(data);
+          return true;
+        }else{
+          console.log('No tiene partes Activos');
+          console.log(data);
+          return false;
+        }
+      }
+    )
+  }
+
 
   ngOnInit() {
   }
