@@ -13,6 +13,7 @@ export class EditarObraComponent implements OnInit {
 idObra: number;
 obras: any;
 capitulos: any;
+nuevoCapitulo: any = {};
   constructor(private router: ActivatedRoute, private rest: RestService ) {
     this.router.params.subscribe(params => {
       this.idObra = params['id'];
@@ -41,7 +42,16 @@ capitulos: any;
         this.capitulos = data.data;
     } );
   }
-
+  AgregarCapitulo() {
+    this.nuevoCapitulo.nombreObra = this.obras.nombreObra;
+    this.nuevoCapitulo.idObra = this.obras.idObra;
+    this.rest.postRest('tareas/', this.nuevoCapitulo).subscribe( data => {
+      console.log(data);
+      
+    });
+    this.nuevoCapitulo = {};
+    this.getCapitulos();
+  }
 
   ngOnInit() {
   }

@@ -15,7 +15,7 @@ url: string;
               private router: ActivatedRoute) {
    this.router.params.subscribe(params => {
     this.idObra = params['id'];
-    this.url = 'http://api.pablosanchezweb.com/tareas/' + params['id'];
+    this.url = 'tareas/' + params['id'];
     console.log(this.idObra);
    });
    this.rest.getRest(this.url).subscribe( data => {

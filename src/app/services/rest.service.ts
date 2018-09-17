@@ -17,9 +17,10 @@ restUrl = 'http://api.pablosanchezweb.com/';
 
   postRest(url, datos): any {
     const restUri = this.restUrl + url;
+    console.log(restUri);
+    
     const headers = new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Authorization': 'my-auth-token'
+      'Content-Type':  'application/json'
     }) ;
     const data = JSON.stringify(datos);
     return this.http.post(restUri, data, {headers});

@@ -9,10 +9,9 @@ import { RestService } from '../../services/rest.service';
 export class AdministracionComponent implements OnInit {
   obras: any;
   constructor(private rest: RestService) {
-    const url = 'http://api.pablosanchezweb.com/obras/';
+    const url = 'obras/';
     this.rest.getRest(url) .subscribe( data => {
       this.obras = data.data;
-      console.log(this.obras);
     }
 
     );

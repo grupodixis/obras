@@ -30,9 +30,35 @@
         </div>
 
     </div>
-    <!-- LISTADO DE CAPITULOS DE LA OBRA -->
+    <!-- AGREGAR CAPITULO -->
+    <div class=" row box-obra">
+        <h3 class="m-2 text-success">Agregar capitulo:</h3>
+        <div class="input-group m-3">
+
+            <div class="input-group-prepend">
+                <span class="input-group-text">Codigo:</span>
+            </div>
+            <input type="text" class="form-control" [(ngModel)]="nuevoCapitulo.codigo">
+
+            <div class="input-group-prepend">
+                <span class="input-group-text">Capitulo:</span>
+            </div>
+            <input type="text" class="form-control" [(ngModel)]="nuevoCapitulo.nombreTarea">
+
+            <div class="input-group-prepend">
+                <span class="input-group-text">Estimado:</span>
+            </div>
+            <input type="time" class="form-control" [(ngModel)]="nuevoCapitulo.tiempoEstimado">
+
+            <button class="btn btn-success ml-1" (click)="AgregarCapitulo()"> <i class="fas fa-plus"></i> </button>
+
+        </div>
+
+
+
+    </div>
     <h3>Capitulos:</h3>
-    <div *ngIf="capitulos"></div>
+
     <div class="row box-obra mt-3" *ngFor="let capitulo of capitulos">
 
 
