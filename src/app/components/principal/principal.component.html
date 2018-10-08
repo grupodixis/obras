@@ -1,19 +1,39 @@
-<div class="container mt-4 p-4">
-    <div class="row  box-obra mt-3" *ngFor="let obra of obras">
-
-        <div class="col-sm-11">
-
-            <h4 class="text-dark">{{obra.nombreObra}}</h4>
-            <p class="text-info">Cliente: {{obra.clienteObra}}</p>
-            <p>{{obra.descripcion}}</p>
-
+<div class="container">
+    <div id="login-row" class="row justify-content-center align-items-center">
+        <div id="login-column" class="col-md-6">
+            <div class="box">
+                <div class="shape1"></div>
+                <div class="shape2"></div>
+                <div class="shape3"></div>
+                <div class="shape4"></div>
+                <div class="shape5"></div>
+                <div class="shape6"></div>
+                <div class="shape7"></div>
+                <div class="float">
+                    <form class="form">
+                        <div class="form-group">
+                            <label for="nombreUsuario" class="text-white">Usuario:</label><br>
+                            <input  type="text" 
+                                    name="nombreUsuario" 
+                                    id="nombreUsuario" 
+                                    class="form-control input-login"
+                                    [(ngModel)]="dataLogin.nombreUsuario">
+                        </div>
+                        <div class="form-group input-login">
+                            <label for="pass" class="text-white">Contraseña:</label><br>
+                            <input  type="text" 
+                                    name="pass" 
+                                    id="pass" 
+                                    class="form-control input-login"
+                                    [(ngModel)]="dataLogin.password"  >
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-success btn-md" (click)="login()" >Entrar</button>
+                            <a routerLink="forgot" class="text-white ml-1" >Olvido sus datos?</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="col-sm-1 d-flex align-items-center">
-            <a class="btn btn-success btn-lg" title="Capitulos" [routerLink]="['/capitulos',obra.idObra]">
-                <i class="fas fa-angle-double-right"></i>
-            </a>
-        </div>
-
-
     </div>
 </div>

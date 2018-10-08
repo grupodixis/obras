@@ -7,10 +7,28 @@ import { EditarObraComponent } from './components/editar-obra/editar-obra.compon
 
 
 export const ROUTES: Routes = [
-    { path: 'administracion', component: AdministracionComponent },
-    { path: 'capitulos/:id', component: CapitulosComponent },
-    { path: 'obras', component: PrincipalComponent },
-    { path: 'editar/:id', component: EditarObraComponent },
-    { path: '', pathMatch: 'full', redirectTo: 'obras' },
-    { path: '**', pathMatch: 'full', redirectTo: 'obras' }
+    { 
+        path: 'administracion', 
+        component: AdministracionComponent 
+    },
+    { 
+        path: 'capitulos/:id', 
+        component: CapitulosComponent 
+    },
+    { 
+        path: 'login', 
+        component: PrincipalComponent 
+    },
+    { 
+        path: 'editar/:id', 
+        component: EditarObraComponent 
+    },
+    { 
+        path: '', pathMatch: 'full', 
+        redirectTo: 'obras' 
+    },
+    {   
+        path: '**', 
+        pathMatch: 'full', 
+        redirectTo: 'login' }
 ];

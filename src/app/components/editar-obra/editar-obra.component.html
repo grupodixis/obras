@@ -1,21 +1,26 @@
 <div class="container" *ngIf="obras">
 
     <div class="row">
-
+        <h3>Datos de la obra:</h3>
         <div class="input-group mb-3 mt-3 col-sm-12">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon3">Cliente:</span>
             </div>
-            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" [(ngModel)]="obras.clienteObra">
+            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" [(ngModel)]="obras.clienteObra" (blur)="actualizarObra()">
         </div>
 
         <div class="input-group mb-3 mt-3 col-sm-12">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon3">Obra:</span>
             </div>
-            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" [(ngModel)]="obras.nombreObra">
+            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" [(ngModel)]="obras.nombreObra"  (blur)="actualizarObra()">
             <div class="input-group-append">
-                <a class="btn btn-group text-white" [ngClass]="{'btn-success' : obras.status == false, 'btn-danger' : obras.status == true }" (click)="activarObra()">Activa</a>
+                <a class="btn btn-group text-white" 
+                   [ngClass]="{'btn-success' : obras.status == true, 'btn-danger' : obras.status == false }" 
+                   (click)="activarObra()"> {{ obras.status == true ? "Activa" : "Inactiva" }}
+                   
+                </a>
+                
             </div>
 
         </div>
@@ -26,13 +31,14 @@
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon3">Descripción:</span>
             </div>
-            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" [(ngModel)]="obras.descripcion">
+            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" [(ngModel)]="obras.descripcion" (blur)="actualizarObra()" >
         </div>
 
     </div>
     <!-- AGREGAR CAPITULO -->
+    <h3>Capitulos:</h3>
     <div class=" row box-obra">
-        <h3 class="m-2 text-success">Agregar capitulo:</h3>
+        <h4 class="m-2 text-success">Agregar capitulo:</h4>
         <div class="input-group m-3">
 
             <div class="input-group-prepend">
@@ -43,7 +49,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">Capitulo:</span>
             </div>
-            <input type="text" class="form-control" [(ngModel)]="nuevoCapitulo.nombreTarea">
+            <input type="text" class="form-control" [(ngModel)]="nuevoCapitulo.nombreCapitulo">
 
             <div class="input-group-prepend">
                 <span class="input-group-text">Estimado:</span>
@@ -57,7 +63,6 @@
 
 
     </div>
-    <h3>Capitulos:</h3>
 
     <div class="row box-obra mt-3" *ngFor="let capitulo of capitulos">
 
@@ -72,14 +77,14 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">Capitulo:</span>
             </div>
-            <input type="text" class="form-control" [(ngModel)]="capitulo.nombreTarea" (blur)="actualizarCapitulo(capitulo)" >
+            <input type="text" class="form-control" [(ngModel)]="capitulo.nombreCapitulo" (blur)="actualizarCapitulo(capitulo)" >
 
             <div class="input-group-prepend">
                 <span class="input-group-text">Estimado:</span>
             </div>
             <input type="time" class="form-control" [(ngModel)]="capitulo.tiempoEstimado" (blur)="actualizarCapitulo(capitulo)" >
 
-            <button class="btn btn-danger ml-1" (click)="checkCapituloPartes(capitulo)" > <i class="fas fa-trash"></i> </button>
+            <button class="btn btn-danger ml-1" (click)="borrarCapitulo(capitulo)" > <i class="fas fa-trash"></i> </button>
 
         </div>
 

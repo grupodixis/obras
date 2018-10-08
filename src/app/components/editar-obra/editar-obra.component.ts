@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '../../../../node_modules/@angular/router';
 import { RestService } from '../../services/rest.service';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Console } from '../../../../node_modules/@angular/core/src/console';
+import { Capitulo } from '../../models/capitulo';
+
+
 
 @Component({
   selector: 'app-editar-obra',
@@ -12,9 +13,11 @@ import { Console } from '../../../../node_modules/@angular/core/src/console';
 export class EditarObraComponent implements OnInit {
 idObra: number;
 obras: any;
-capitulos: any;
+capitulos: Capitulo [];
 nuevoCapitulo: any = {};
+
   constructor(private router: ActivatedRoute, private rest: RestService ) {
+    
     this.router.params.subscribe(params => {
       this.idObra = params['id'];
       console.log(this.idObra);
@@ -22,26 +25,30 @@ nuevoCapitulo: any = {};
 
     this.getObra();
     this.getCapitulos();
+
   }
 
   activarObra() {
     this.obras.status = !this.obras.status;
     console.log(this.obras.status);
+    this.actualizarObra();
   }
 
 /* LECTURA DE DATOS */
 
   getObra() {
-    this.rest.getRest('obras/' + this.idObra )
+    this.rest.getRest('obras/consultar/' + this.idObra +'/?full=1' )
       .subscribe(data => {
         this.obras = data.data[0];
+        console.log(this.obras);
+        
     } );
   }
 
   getCapitulos() {
-    this.rest.getRest('tareas/' + this.idObra )
+    this.rest.getRest('obras/capitulos/' + this.idObra  +'/?full=1' )
       .subscribe(data => {
-        this.capitulos = data.data;
+        this.capitulos = data.data.reverse();
         console.log(this.capitulos);
         
     } );
@@ -52,38 +59,45 @@ nuevoCapitulo: any = {};
     this.nuevoCapitulo.nombreObra = this.obras.nombreObra;
     this.nuevoCapitulo.idObra = this.obras.idObra;
     this.nuevoCapitulo.status = true;
-    this.rest.postRest('tareas/', this.nuevoCapitulo).subscribe( data => {
-      console.log(data);
-      
-    });
-    this.nuevoCapitulo = {};
-    this.getCapitulos();
+    this.rest.postRest('capitulos/crear/', this.nuevoCapitulo).subscribe( 
+      data => {
+        console.log(data);
+        this.nuevoCapitulo ={};
+        this.getCapitulos();
+      });
   }
 
 
 
 /*    ACTUALIZAR DATOS */
-  actualizarCapitulo(capitulo){
-    
-    this.rest.putRest('tareas/',capitulo).subscribe( data =>{
-      console.log(data);
-      
-    });
-  }
-  checkCapituloPartes(capitulo){
-    this.rest.getRest('partes/' + capitulo.idTarea+'/' ).subscribe(
+
+  actualizarObra(){
+    this.rest.putRest('obras/actualizar/'+ this.obras.idObra + '/', this.obras).subscribe(
       data =>{
-        if (data.data && data.data.length){
-          console.log('Tiene partes Activos');
-          console.log(data);
-          return true;
-        }else{
-          console.log('No tiene partes Activos');
-          console.log(data);
-          return false;
-        }
+        console.log(data);
+        
       }
     )
+  }
+
+  actualizarCapitulo(capitulo){
+    
+    this.rest.putRest('capitulos/actualizar/'+capitulo.idCapitulo+'/',capitulo).subscribe( 
+      data =>{
+        console.log(data);
+      });
+  }
+
+  
+
+
+ /* BORRAR DATOS */
+  borrarCapitulo(capitulo){
+    this.rest.postRest('capitulos/desactivar/'+capitulo.idTarea+'/', capitulo).subscribe(data =>{
+      console.log(data);
+      this.getCapitulos();
+    });
+   
   }
 
 

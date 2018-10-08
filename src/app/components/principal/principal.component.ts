@@ -7,19 +7,26 @@ import { RestService } from '../../services/rest.service';
   styleUrls: ['./principal.component.css']
 })
 export class PrincipalComponent implements OnInit {
-obras: any;
+  dataLogin:any = {};
 
   constructor(private rest: RestService) {
-    const url = 'obras/';
-    this.rest.getRest(url).subscribe( data => {
-      this.obras = data.data;
-      console.log(this.obras);
-    }
-
-    );
-   }
-
-  ngOnInit() {
+   
   }
 
+  login(){
+    console.log(this.dataLogin);
+    
+    this.rest.postRest("login/",this.dataLogin).subscribe(
+      data => {
+        console.log(data);
+        
+        localStorage.setItem('authorization', 'bearer '+data.token);
+      }
+    )
+  }  
+    ngOnInit() {
+    }
 }
+
+
+

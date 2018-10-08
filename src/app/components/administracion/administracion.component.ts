@@ -9,7 +9,9 @@ import { RestService } from '../../services/rest.service';
 export class AdministracionComponent implements OnInit {
   obras: any;
   constructor(private rest: RestService) {
-    const url = 'obras/';
+    
+    const url = 'obras/consultar/?full=1';
+    
     this.rest.getRest(url) .subscribe( data => {
       this.obras = data.data;
     }
@@ -19,5 +21,7 @@ export class AdministracionComponent implements OnInit {
 
   ngOnInit() {
   }
+ 
+
 
 }
