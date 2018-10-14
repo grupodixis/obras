@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RestService } from '../../services/rest.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-principal',
@@ -9,18 +10,24 @@ import { RestService } from '../../services/rest.service';
 export class PrincipalComponent implements OnInit {
   dataLogin:any = {};
 
-  constructor(private rest: RestService) {
+  constructor(private rest: RestService, private route:Router) {
    
   }
 
   login(){
     console.log(this.dataLogin);
     
-    this.rest.postRest("login/",this.dataLogin).subscribe(
+    this.rest.loginRest("login/",this.dataLogin).subscribe(
       data => {
-        console.log(data);
+        if(data.token){
+          localStorage.setItem('authorization', 'bearer '+data.token);
+          this.route.navigate(['/administracion'])
+        }else{
+          this.route.navigate(['/login'])
+          
+        }
+
         
-        localStorage.setItem('authorization', 'bearer '+data.token);
       }
     )
   }  

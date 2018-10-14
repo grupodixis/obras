@@ -15,6 +15,7 @@ idObra: number;
 obras: any;
 capitulos: Capitulo [];
 nuevoCapitulo: any = {};
+activas: boolean = true;
 
   constructor(private router: ActivatedRoute, private rest: RestService ) {
     
@@ -24,7 +25,7 @@ nuevoCapitulo: any = {};
     });
 
     this.getObra();
-    this.getCapitulos();
+    this.getCapitulos('activas');
 
   }
 
@@ -45,25 +46,27 @@ nuevoCapitulo: any = {};
     } );
   }
 
-  getCapitulos() {
-    this.rest.getRest('obras/capitulos/' + this.idObra  +'/?full=1' )
+  getCapitulos(activas) {
+    this.activas = (activas == "activas")? true : false;
+    this.rest.getRest('obras/capitulos/' + this.idObra  +'/?full=1&status='+activas )
       .subscribe(data => {
         this.capitulos = data.data.reverse();
         console.log(this.capitulos);
-        
     } );
   }
 
  /* AGREGAR NUEVOS DATOS */
   agregarCapitulo() {
-    this.nuevoCapitulo.nombreObra = this.obras.nombreObra;
+   // this.nuevoCapitulo.nombreObra = this.obras.nombreObra;
     this.nuevoCapitulo.idObra = this.obras.idObra;
-    this.nuevoCapitulo.status = true;
+    this.nuevoCapitulo.status = "1";
+    console.log(this.nuevoCapitulo);
+    
     this.rest.postRest('capitulos/crear/', this.nuevoCapitulo).subscribe( 
       data => {
         console.log(data);
         this.nuevoCapitulo ={};
-        this.getCapitulos();
+        this.getCapitulos('activas');
       });
   }
 
@@ -81,21 +84,26 @@ nuevoCapitulo: any = {};
   }
 
   actualizarCapitulo(capitulo){
+    console.log(capitulo);
     
-    this.rest.putRest('capitulos/actualizar/'+capitulo.idCapitulo+'/',capitulo).subscribe( 
+    this.rest.postRest('capitulos/actualizar/'+capitulo.idCapitulo+'/',capitulo).subscribe( 
       data =>{
         console.log(data);
       });
   }
 
-  
-
-
- /* BORRAR DATOS */
-  borrarCapitulo(capitulo){
-    this.rest.postRest('capitulos/desactivar/'+capitulo.idTarea+'/', capitulo).subscribe(data =>{
+  activarCapitulo(capitulo){
+    this.rest.postRest('capitulos/activar/'+capitulo.idCapitulo+'/', capitulo).subscribe(data =>{
       console.log(data);
-      this.getCapitulos();
+      this.getCapitulos('inactivas');
+    });
+   
+  }
+
+  desactivarCapitulo(capitulo){
+    this.rest.postRest('capitulos/desactivar/'+capitulo.idCapitulo+'/', capitulo).subscribe(data =>{
+      console.log(data);
+      this.getCapitulos('activas');
     });
    
   }

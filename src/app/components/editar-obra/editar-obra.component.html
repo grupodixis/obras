@@ -36,7 +36,17 @@
 
     </div>
     <!-- AGREGAR CAPITULO -->
-    <h3>Capitulos:</h3>
+    <nav class="navbar">
+            <h3>Capitulos:</h3> 
+        <select name="FiltroActivo" id="" class="custom-select" aria-placeholder="Filtro" #t  (change)="getCapitulos(t.value)" >
+            <option value="activas">Activos</option>
+            <option value="inactivas">Inactivos</option>
+             
+        </select>
+
+
+    </nav>
+
     <div class=" row box-obra">
         <h4 class="m-2 text-success">Agregar capitulo:</h4>
         <div class="input-group m-3">
@@ -63,7 +73,8 @@
 
 
     </div>
-
+    
+   
     <div class="row box-obra mt-3" *ngFor="let capitulo of capitulos">
 
 
@@ -84,7 +95,9 @@
             </div>
             <input type="time" class="form-control" [(ngModel)]="capitulo.tiempoEstimado" (blur)="actualizarCapitulo(capitulo)" >
 
-            <button class="btn btn-danger ml-1" (click)="borrarCapitulo(capitulo)" > <i class="fas fa-trash"></i> </button>
+            <button class="btn btn-danger ml-1" *ngIf="activas" (click)="desactivarCapitulo(capitulo)" ><i class="fas fa-power-off"></i></button>
+            <button class="btn btn-success ml-1" *ngIf="!activas" (click)="activarCapitulo(capitulo)" ><i class="fas fa-power-off"></i></button>
+
 
         </div>
 

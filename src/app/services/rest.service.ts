@@ -1,15 +1,26 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map, filter } from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class RestService {
 restUrl = 'http://api.hamenorca.com/';
-token = ""; //"bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJFTVBSRVNBIiwiYXVkIjoiQVVESUVOQ0lBIiwidWlkIjpudWxsLCJ1c2VyIjoicGFibG9EaXhpcyIsImVtYWlsIjpudWxsfQ.r9N59lbZgLiPqG1vKXZIdTcvkpxQmNBhOE5gArXdoG4";
-  constructor(private http: HttpClient) {}
+token:string;
+  constructor(private http: HttpClient) {
+    if (this.loggedIn) 
+    this.token = localStorage.getItem('authorization');
+  }
 
+  loginRest(url, datos): any {
+    let headers = new HttpHeaders({
+      'Content-Type':  'application/json'
+    }) 
+    const restUri = this.restUrl + url;
+    const data = JSON.stringify(datos);
+    return this.http.post(restUri, data,{headers});
+  }
 
   getRest(url): any {
     const restUri = this.restUrl + url;
@@ -29,6 +40,7 @@ token = ""; //"bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJFTVBSRVNBI
   postRest(url, datos): any {
     let headers = new HttpHeaders({
       'Content-Type':  'application/json',
+      'Authorization': this.token
     }) 
   
     const restUri = this.restUrl + url;
@@ -40,7 +52,7 @@ token = ""; //"bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJFTVBSRVNBI
     const restUri = this.restUrl + url;
     const headers = new HttpHeaders({
       'Content-Type':  'application/json',
-      'Authorization': 'my-auth-token'
+      'Authorization': this.token
     }) ;
     const data = JSON.stringify(datos);
     return this.http.put(restUri, data, {headers});
@@ -49,7 +61,10 @@ token = ""; //"bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJFTVBSRVNBI
   loggedIn(){
     return !!localStorage.getItem('authorization')  //return boolean
   }
+  logout(){
+    localStorage.removeItem('authorization')
 
+  }
   
 
 

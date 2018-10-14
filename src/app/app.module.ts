@@ -15,6 +15,7 @@ import { ROUTES } from './app.routes';
 
 import { EditarObraComponent } from './components/editar-obra/editar-obra.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PartesComponent } from './components/partes/partes.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FooterComponent,
     AdministracionComponent,
     CapitulosComponent,
-    EditarObraComponent
+    EditarObraComponent,
+    PartesComponent
   ],
   imports: [
     BrowserModule,
