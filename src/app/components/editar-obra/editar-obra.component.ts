@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '../../../../node_modules/@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { RestService } from '../../services/rest.service';
 import { Capitulo } from '../../models/capitulo';
 

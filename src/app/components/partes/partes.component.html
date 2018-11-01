@@ -1,8 +1,6 @@
-<div class="container mt-4 p-4">
-
+<div class="container">
   <div class="row">
-
-    <div class="col-sm-5">
+    <div class="col-sm-12">
       <h3>Formulario Parte</h3>
       <div class="row">
      
@@ -17,40 +15,42 @@
           <textarea class="form-control" cols="30" rows="10" [(ngModel)]="editParte.observacion" ></textarea>
         </div>
         <div class="col-sm-12">
-          <button class="btn btn-primary btn-block mt-1 " (click)="addParte()" >Registrar</button>
+          <button class="btn btn-primary btn-block mt-2 " (click)="editSendToDb()" *ngIf="edit" >Guardar</button>
+          <button class="btn btn-primary btn-block mt-2 " (click)="addParte()" *ngIf="!edit" >Crear</button>
+
         </div>
       </div>
     </div>
-    <div class="col-sm-7">
-      <h3>Listado de partes</h3>
-      <h5>Tiempo actual trabajado: {{totalTiempo | date: 'hh:mm:ss'}} </h5>
+  </div>
+  <h3 class="m-2">Listado de partes: Tiempo actual trabajado: {{totalTiempo | date: 'hh:mm:ss'}} </h3>
+  <div class="row">
       
-      <div class="row">
-        <div class=" col-sm-5 box-obra card m-2" *ngFor="let parte of partes" >
-          <div class="card-header">
-            <div class="card-title"> Fecha: {{parte.inicio | date:'shortDate'}}  </div>
-          </div>
-          
-          <div class="card-body">
-            <div class=" float-right">
-              <img src="https://picsum.photos/100/50/?random&gravity=east" alt="" srcset="">
-            </div> 
-            
-              Inicio: {{parte.inicio | date:'shortTime'}}  
-              Final: {{parte.final | date:'shortTime'}}
-              Tiempo: {{parte.tiempo | date:'mm:ss'}}
+            <div class=" col-sm-12 box-obra  m-2" *ngFor="let parte of partes" >
+              Fecha: <strong>{{parte.inicio | date:'shortDate'}} </strong>  
+              <button class="btn btn-primary float-right mt-1" (click)="editSendToForm(parte)" > <i class="fas fa-pencil-alt"></i> </button>
+              <button class="btn btn-danger float-right mt-1 mr-1" (click)="borrarParte(parte)" > <i class="fas fa-ban"></i> </button>
+              
+              Inicio: <strong class="text-success"> {{parte.inicio | date:'shortTime'}}  </strong>
+              Final: <strong class="text-danger">{{parte.final | date:'shortTime'}} </strong>
+              Tiempo: <strong>{{parte.tiempo | date:'mm:ss'}} </strong>
               <div class="card-text">
                 {{parte.observacion}}
               </div>
-          </div>  
+            </div>  
+            
+        
+  </div>    
+
+
+
+
+</div>
+
+
+
+             
+            
+          
+          
           
         
-        </div>
-
-      </div>
-
-
-    </div>
-
-  </div>
-</div>

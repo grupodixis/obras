@@ -94,7 +94,8 @@
                 <span class="input-group-text">Estimado:</span>
             </div>
             <input type="time" class="form-control" [(ngModel)]="capitulo.tiempoEstimado" (blur)="actualizarCapitulo(capitulo)" >
-
+            <button class="btn btn-primary" 
+                    [routerLink]="['/partes',capitulo.idCapitulo]" ><i class="far fa-calendar-check" title="Partes"></i></button>
             <button class="btn btn-danger ml-1" *ngIf="activas" (click)="desactivarCapitulo(capitulo)" ><i class="fas fa-power-off"></i></button>
             <button class="btn btn-success ml-1" *ngIf="!activas" (click)="activarCapitulo(capitulo)" ><i class="fas fa-power-off"></i></button>
 
