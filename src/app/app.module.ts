@@ -16,6 +16,7 @@ import { ROUTES } from './app.routes';
 import { EditarObraComponent } from './components/editar-obra/editar-obra.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PartesComponent } from './components/partes/partes.component';
+import { PartesService } from './services/partes.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import { PartesComponent } from './components/partes/partes.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [RestService],
+  providers: [RestService,PartesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

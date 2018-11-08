@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RestService } from 'src/app/services/rest.service';
+import { PartesService } from '../../services/partes.service';
 
 @Component({
   selector: 'app-partes',
@@ -16,15 +17,13 @@ export class PartesComponent implements OnInit {
   totalTiempo:Number
   edit:boolean = false
   capitulo:any
-  constructor( private router: ActivatedRoute, private rest: RestService) { 
+  constructor( private router: ActivatedRoute, private rest: RestService, private _partes:PartesService) { 
     this.FechaHora = {}
     this.editParte = {}
     this.router.params.subscribe(params =>{
       this.idCapitulo = params['id']
     })
     this.getCapitulo()
-    
-    
     this.getPartes()
     this.getTiempoCapitulo()
   }
@@ -33,45 +32,28 @@ export class PartesComponent implements OnInit {
   }
 
 getPartes(){
-  this.rest.getRest('partes/partesUsuarios/'+ this.idCapitulo+'/'+this.idUsuario+'/?full=1').subscribe(
+  this._partes.getPartes(this.idCapitulo,this.idUsuario).subscribe(
     data =>{
-      this.partes = data.data;
-     // console.log(this.partes)
+      this.partes = data.data
     }
   )
    
 }
 getTiempoCapitulo(){
-  this.rest.getRest('partes/sumar/'+ this.idCapitulo+'/'+this.idUsuario+'/?full=1').subscribe(
+  this._partes.getTiempoCapitulo(this.idCapitulo,this.idUsuario).subscribe(
     data =>{
       this.totalTiempo = data.data.suma.total;
-      //console.log(this.totalTiempo)
     }
   )
 }
 
 
-convertToUnix(fecha,hora){
-  const fechaHora = `${fecha}T${hora}Z`
-  const unix = new Date (fechaHora)
-  return unix.getTime();
-  
-}
-convertToDate(unix){
-  const date = new Date(unix)
-  return date.getFullYear() +'-'+(date.getMonth()+1)+'-'+date.getDate()
 
-
-}
-convertToTime(unix){
-  const date = new Date(unix)
-  return date.getHours() +':'+date.getMinutes();
-}
 
 addParte(){
   //let parte:any
-  this.editParte.inicio = this.convertToUnix(this.FechaHora.fecha,this.FechaHora.inicio)
-  this.editParte.final = this.convertToUnix(this.FechaHora.fecha,this.FechaHora.final)
+  this.editParte.inicio = this._partes.convertToUnix(this.FechaHora.fecha,this.FechaHora.inicio)
+  this.editParte.final = this._partes.convertToUnix(this.FechaHora.fecha,this.FechaHora.final)
   this.editParte.observacion = this.editParte.observacion
   this.editParte.idUsuario = this.idUsuario
   this.editParte.fecha = this.FechaHora.fecha
@@ -80,34 +62,32 @@ addParte(){
   this.rest.postRest('partes/iniciar/', this.editParte).subscribe(
     res =>{
       console.log(res);
-      
-    }
+      }
   )
   this.edit = false
-  
   this.getPartes()
   this.getTiempoCapitulo()
 }
 editSendToForm(parte){
   this.edit = true
   this.editParte = parte;
-  this.FechaHora.fecha =  this.convertToDate(parseInt( parte.inicio)).toString().slice(0,10)
+  this.FechaHora.fecha =  this._partes.convertToDate(parseInt( parte.inicio)).toString().slice(0,10)
   //console.log(this.FechaHora.fecha)
-  this.FechaHora.inicio = this.convertToTime(parseInt( parte.inicio))
-  this.FechaHora.final = this.convertToTime(parseInt( parte.final))
+  this.FechaHora.inicio = this._partes.convertToTime(parseInt( parte.inicio))
+  this.FechaHora.final = this._partes.convertToTime(parseInt( parte.final))
 }
 editSendToDb(){
 let parte;
 parte = this.editParte  
-parte.inicio = this.convertToUnix(this.FechaHora.fecha,this.FechaHora.inicio)
-parte.final = this.convertToUnix(this.FechaHora.fecha,this.FechaHora.final)
+parte.inicio = this._partes.convertToUnix(this.FechaHora.fecha,this.FechaHora.inicio)
+parte.final = this._partes.convertToUnix(this.FechaHora.fecha,this.FechaHora.final)
 delete parte.fecha
 delete parte.tiempo
 delete parte.timeStamp
-//console.log(this.editParte);
+console.log(this.editParte);
 this.rest.postRest('partes/actualizar/'+this.editParte.idParte,this.editParte).subscribe(
   res =>{
-    //console.log(res)
+    console.log(res)
     this.getPartes()
     this.getTiempoCapitulo()
     this.edit = false
@@ -119,7 +99,7 @@ this.rest.postRest('partes/actualizar/'+this.editParte.idParte,this.editParte).s
 //capitulos/consultar/29?full=1
 
 getCapitulo(){
-  this.rest.getRest('capitulos/consultar/'+this.idCapitulo+'/?full=1').subscribe(
+  this._partes.getCapitulo(this.idCapitulo).subscribe(
     res =>{
       this.capitulo = res.data[0]
       console.log(this.capitulo)
