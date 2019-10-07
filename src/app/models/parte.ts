@@ -10,5 +10,5 @@ export interface Parte{
     inicio:  Number;
     final:  Number;
     observacion:  String;
-    fotografias?:String [];
+    imagen?: { titulo:String, imagen:String };
 }

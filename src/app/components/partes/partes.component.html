@@ -4,19 +4,20 @@
       <h3>Formulario Parte</h3>
       <div class="row">
      
-        <div class="col-sm-6">Fecha:</div>
-        <div class="col-sm-3">inicio</div>
-        <div class="col-sm-3">Final</div>
-        <div class="col-sm-6"><input class="form-control" type="date" [(ngModel)]="FechaHora.fecha" ></div>
-        <div class="col-sm-3"><input class="form-control" type="time" [(ngModel)]="FechaHora.inicio" ></div>
-        <div class="col-sm-3"><input class="form-control" type="time" [(ngModel)]="FechaHora.final" ></div>
+        
+        <div class="col-sm-6">inicio</div>
+        <div class="col-sm-6">Final</div>
+        <div class="col-sm-6">
+          <input class="form-control" type="datetime-local" [(ngModel)]="FechaHora.finicio" (change)="FechaHora.ffinal = FechaHora.finicio" > 
+        </div>
+        <div class="col-sm-6"><input class="form-control" type="datetime-local" [(ngModel)]="FechaHora.ffinal" ></div>
         <div class="col-sm-12">Observación:</div>
         <div class="col-sm-12">
           <textarea class="form-control" cols="30" rows="10" [(ngModel)]="editParte.observacion" ></textarea>
         </div>
         <div class="col-sm-12">
           <button class="btn btn-primary btn-block mt-2 " (click)="editSendToDb()" *ngIf="edit" >Guardar</button>
-          <button class="btn btn-primary btn-block mt-2 " (click)="addParte()" *ngIf="!edit" >Crear</button>
+          <button class="btn btn-success btn-block mt-2 " (click)="addParte()" *ngIf="!edit" >Crear</button>
 
         </div>
       </div>
@@ -26,15 +27,25 @@
   <div class="row">
       
             <div class=" col-sm-12 box-obra  m-2" *ngFor="let parte of partes" >
-              Fecha: <strong>{{parte.inicio | date:'shortDate'}} </strong>  
-              <button class="btn btn-primary float-right mt-1" (click)="editSendToForm(parte)" > <i class="fas fa-pencil-alt"></i> </button>
-              <button class="btn btn-danger float-right mt-1 mr-1" (click)="borrarParte(parte)" > <i class="fas fa-ban"></i> </button>
               
-              Inicio: <strong class="text-success"> {{parte.inicio | date:'shortTime'}}  </strong>
-              Final: <strong class="text-danger">{{parte.final | date:'shortTime'}} </strong>
-              Tiempo: <strong>{{parte.tiempo | date:'hh:mm:ss'}} </strong>
+              <button class="btn btn-primary float-right mt-1" (click)="editSendToForm(parte)" > <i class="fas fa-pencil-alt"></i> </button>
+              <button class="btn btn-danger float-right mt-1 mr-1" (click)="desactivarParte(parte)" > <i class="fas fa-ban"></i> </button>
+              <button class="btn btn-danger float-right mt-1 mr-1" (click)="borrarParte(parte)" > <i class="fas fa-trash"></i> </button>
+              
+              
+              Inicio: <strong class="text-success"> {{parte.finicio}}  </strong>
+              Final: <strong class="text-danger">{{parte.ffinal}} </strong>
+              Tiempo: <strong>{{parte.tiempo }} </strong>
               <div class="card-text">
                 {{parte.observacion}}
+              </div>
+              Estado: <strong> {{parte.status}} </strong>
+              <div>
+                <span *ngFor="let item of parte.imagen.split(', ')">
+                  <img class="img-thumbnail" src="http://api.hamenorca.com/{{item}}" alt="" width="200">
+                </span>
+                <hr>
+                <input name="Imagen" type="File" (change)="onFileSelected($event)" multiple class="form-control-file" >
               </div>
             </div>  
             
